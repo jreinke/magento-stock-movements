@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <JR_StockHistory>
+            <active>true</active>
+            <codePool>community</codePool>
+        </JR_StockHistory>
+    </modules>
+</config>
