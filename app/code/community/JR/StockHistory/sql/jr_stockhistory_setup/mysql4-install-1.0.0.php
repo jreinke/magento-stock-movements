@@ -3,11 +3,11 @@
 $installer = $this;
 /* @var $installer Mage_Core_Model_Resource_Setup */
 
-$tableHistory = $this->getTable('cataloginventory_stock_history');
-$tableItem    = $this->getTable('cataloginventory_stock_item');
-$tableUser    = $this->getTable('admin/user');
-
 $installer->startSetup();
+
+$tableHistory = $installer->getTable('cataloginventory_stock_history');
+$tableItem    = $installer->getTable('cataloginventory_stock_item');
+$tableUser    = $installer->getTable('admin/user');
 
 $installer->run("
 DROP TABLE IF EXISTS {$tableHistory};
