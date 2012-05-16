@@ -127,9 +127,9 @@ class JR_StockHistory_Model_Stock_Observer
         if (! $stockItem->getStockStatusChangedAutomaticallyFlag()) {
             if (! $message = $stockItem->getSaveHistoryMessage()) {
                 if (Mage::getSingleton('api/session')->getSessionId()) {
-                    $message = 'Stock saved from Magento API';
+                    $message = Mage::helper('jr_stockhistory')->__('Stock saved from Magento API');
                 } else {
-                    $message = 'Stock saved manually';
+                    $message = Mage::helper('jr_stockhistory')->__('Stock saved manually');
                 }
             }
             $this->insertStockHistory($stockItem, $message);
