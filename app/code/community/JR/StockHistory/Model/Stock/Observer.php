@@ -34,41 +34,46 @@ class JR_StockHistory_Model_Stock_Observer
 
     public function catalogProductImportFinishBefore($observer)
     {
+        $productIds = array();
         $adapter = $observer->getEvent()->getAdapter();
-        Mage_ImportExport_Model_Import::getDataSourceModel()->getIterator()->rewind();
-        $model = Mage::getModel('catalog/product');
-        $skus = array();
-        while ($bunch = $adapter->getNextBunch()) {
-            foreach ($bunch as $rowData) {
-                if (null !== $rowData['sku']) {
-                    $skus[] = $rowData['sku'];
+        $resource = Mage::getResourceModel('jr_stockhistory/stock_history');
+
+        if ($adapter instanceof Mage_Catalog_Model_Convert_Adapter_Product) {
+            $productIds = $adapter->getAffectedEntityIds();
+        } else {
+            Mage_ImportExport_Model_Import::getDataSourceModel()->getIterator()->rewind();
+            $skus = array();
+            while ($bunch = $adapter->getNextBunch()) {
+                foreach ($bunch as $rowData) {
+                    if (null !== $rowData['sku']) {
+                        $skus[] = $rowData['sku'];
+                    }
                 }
+            }
+            if (!empty($skus)) {
+                $productIds = $resource->getProductsIdBySku($skus);
             }
         }
 
-        if (!empty($skus)) {
-            $resource = Mage::getResourceModel('jr_stockhistory/stock_history');
-            $productIds = $resource->getProductsIdBySku($skus);
-            if (!empty($productIds)) {
-                $stock = Mage::getSingleton('cataloginventory/stock');
-                $stocks = Mage::getResourceModel('cataloginventory/stock')->getProductsStock($stock, $productIds);
-                $stocksHistory = array();
-                $datetime = Varien_Date::formatDate(time());
-                foreach ($stocks as $stockData) {
-                    $stocksHistory[] = array(
-                        'item_id'     => $stockData['item_id'],
-                        'user'        => $this->_getUsername(),
-                        'user_id'     => $this->_getUserId(),
-                        'qty'         => $stockData['qty'],
-                        'is_in_stock' => (int) $stockData['is_in_stock'],
-                        'message'     => 'Product import',
-                        'created_at'  => $datetime,
-                    );
-                }
+        if (!empty($productIds)) {
+            $stock = Mage::getSingleton('cataloginventory/stock');
+            $stocks = Mage::getResourceModel('cataloginventory/stock')->getProductsStock($stock, $productIds);
+            $stocksHistory = array();
+            $datetime = Varien_Date::formatDate(time());
+            foreach ($stocks as $stockData) {
+                $stocksHistory[] = array(
+                    'item_id'     => $stockData['item_id'],
+                    'user'        => $this->_getUsername(),
+                    'user_id'     => $this->_getUserId(),
+                    'qty'         => $stockData['qty'],
+                    'is_in_stock' => (int) $stockData['is_in_stock'],
+                    'message'     => 'Product import',
+                    'created_at'  => $datetime,
+                );
+            }
 
-                if (!empty($stocksHistory)) {
-                    $resource->insertStocksHistory($stocksHistory);
-                }
+            if (!empty($stocksHistory)) {
+                $resource->insertStocksHistory($stocksHistory);
             }
         }
     }
