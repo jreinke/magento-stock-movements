@@ -129,7 +129,7 @@ class JR_StockHistory_Model_Stock_Observer
     public function saveStockItemAfter($observer)
     {
         $stockItem = $observer->getEvent()->getItem();
-        if (! $stockItem->getStockStatusChangedAutomaticallyFlag()) {
+        if (! $stockItem->getStockStatusChangedAutomaticallyFlag() || $stockItem->getOriginalInventoryQty() != $stockItem->getQty()) {
             if (! $message = $stockItem->getSaveHistoryMessage()) {
                 if (Mage::getSingleton('api/session')->getSessionId()) {
                     $message = Mage::helper('jr_stockhistory')->__('Stock saved from Magento API');
