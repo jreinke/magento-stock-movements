@@ -5,12 +5,14 @@ class JR_StockHistory_Model_Stock_Observer
     public function addStockHistoryTab()
     {
         $layout = Mage::getSingleton('core/layout');
-        $layout->getBlock('product_tabs')
-            ->addTab('stock_history', array(
+        $block = $layout->getBlock('product_tabs');
+        if ($block) {
+            $block->addTab('stock_history', array(
                 'after' => 'inventory',
                 'label' => Mage::helper('jr_stockhistory')->__('Stock History'),
                 'content' => $layout->createBlock('jr_stockhistory/adminhtml_stock_history_grid')->toHtml(),
             ));
+        }
     }
 
     public function cancelOrderItem($observer)
