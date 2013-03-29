@@ -25,4 +25,4 @@ or download package manually:
 
 ## Full overview
 
-I wrote an article on my blog for full extension overview, [click here](http://www.johannreinke.com/en/2012/02/07/magento-save-product-stock-moves/).
+I wrote an article on my blog for full extension overview, [click here](http://bubbleco.de/en/2012/02/07/magento-save-product-stock-moves/).
