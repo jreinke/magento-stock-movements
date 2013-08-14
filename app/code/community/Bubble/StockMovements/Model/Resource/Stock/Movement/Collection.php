@@ -1,10 +1,16 @@
 <?php
-
-class JR_StockHistory_Model_Resource_Stock_History_Collection extends Mage_Core_Model_Resource_Db_Collection_Abstract
+/**
+ * @category    Bubble
+ * @package     Bubble_StockMovements
+ * @version     1.0.0
+ * @copyright   Copyright (c) 2013 BubbleCode (http://shop.bubblecode.net)
+ */
+class Bubble_StockMovements_Model_Resource_Stock_Movement_Collection
+    extends Mage_Core_Model_Resource_Db_Collection_Abstract
 {
     public function _construct()
     {
-        $this->_init('jr_stockhistory/stock_history');
+        $this->_init('bubble_stockmovements/stock_movement');
     }
 
     protected function _afterLoad()
@@ -20,12 +26,12 @@ class JR_StockHistory_Model_Resource_Stock_History_Collection extends Mage_Core_
                 if ($move > 0) {
                     $move = '+' . $move;
                 }
-                $prevItem->setMove($move);
+                $prevItem->setMovement($move);
                 $prevItem = $item;
             }
         }
         if ($prevItem) {
-            $prevItem->setMove('-');
+            $prevItem->setMovement('-');
         }
 
         return $this;

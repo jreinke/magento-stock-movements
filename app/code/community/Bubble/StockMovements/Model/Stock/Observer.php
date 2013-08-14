@@ -1,16 +1,21 @@
 <?php
-
-class JR_StockHistory_Model_Stock_Observer
+/**
+ * @category    Bubble
+ * @package     Bubble_StockMovements
+ * @version     1.0.0
+ * @copyright   Copyright (c) 2013 BubbleCode (http://shop.bubblecode.net)
+ */
+class Bubble_StockMovements_Model_Stock_Observer
 {
-    public function addStockHistoryTab()
+    public function addStockMovementsTab()
     {
         $layout = Mage::getSingleton('core/layout');
         $block = $layout->getBlock('product_tabs');
         if ($block) {
-            $block->addTab('stock_history', array(
+            $block->addTab('stock_movements', array(
                 'after' => 'inventory',
-                'label' => Mage::helper('jr_stockhistory')->__('Stock History'),
-                'content' => $layout->createBlock('jr_stockhistory/adminhtml_stock_history_grid')->toHtml(),
+                'label' => Mage::helper('bubble_stockmovements')->__('Stock Movements'),
+                'content' => $layout->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')->toHtml(),
             ));
         }
     }
@@ -25,7 +30,7 @@ class JR_StockHistory_Model_Stock_Observer
         if ($item->getId() && ($productId = $item->getProductId()) && empty($children) && $qty) {
             Mage::getSingleton('cataloginventory/stock')->backItemQty($productId, $qty);
             $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProductId());
-            $this->insertStockHistory($stockItem, sprintf(
+            $this->insertStockMovement($stockItem, sprintf(
                 'Product restocked after order cancellation (order: %s)',
                 $item->getOrder()->getIncrementId())
             );
@@ -38,7 +43,7 @@ class JR_StockHistory_Model_Stock_Observer
     {
         $productIds = array();
         $adapter = $observer->getEvent()->getAdapter();
-        $resource = Mage::getResourceModel('jr_stockhistory/stock_history');
+        $resource = Mage::getResourceModel('bubble_stockmovements/stock_movement');
 
         if ($adapter instanceof Mage_Catalog_Model_Convert_Adapter_Product) {
             $productIds = $adapter->getAffectedEntityIds();
@@ -60,10 +65,10 @@ class JR_StockHistory_Model_Stock_Observer
         if (!empty($productIds)) {
             $stock = Mage::getSingleton('cataloginventory/stock');
             $stocks = Mage::getResourceModel('cataloginventory/stock')->getProductsStock($stock, $productIds);
-            $stocksHistory = array();
+            $stocksMovements = array();
             $datetime = Varien_Date::formatDate(time());
             foreach ($stocks as $stockData) {
-                $stocksHistory[] = array(
+                $stocksMovements[] = array(
                     'item_id'     => $stockData['item_id'],
                     'user'        => $this->_getUsername(),
                     'user_id'     => $this->_getUserId(),
@@ -74,8 +79,8 @@ class JR_StockHistory_Model_Stock_Observer
                 );
             }
 
-            if (!empty($stocksHistory)) {
-                $resource->insertStocksHistory($stocksHistory);
+            if (!empty($stocksMovements)) {
+                $resource->insertStocksMovements($stocksMovements);
             }
         }
     }
@@ -91,7 +96,8 @@ class JR_StockHistory_Model_Stock_Observer
         foreach ($orders as $order) {
             foreach ($order->getAllItems() as $orderItem) {
                 if ($orderItem->getQtyOrdered()) {
-                    $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($orderItem->getProductId());
+                    $stockItem = Mage::getModel('cataloginventory/stock_item')
+                        ->loadByProduct($orderItem->getProductId());
                     if (!isset($stockItems[$stockItem->getId()])) {
                         $stockItems[$stockItem->getId()] = array(
                             'item'   => $stockItem,
@@ -106,7 +112,7 @@ class JR_StockHistory_Model_Stock_Observer
 
         if (!empty($stockItems)) {
             foreach ($stockItems as $data) {
-                $this->insertStockHistory($data['item'], sprintf(
+                $this->insertStockMovement($data['item'], sprintf(
                     'Product ordered (order%s: %s)',
                     count($data['orders']) > 1 ? 's' : '',
                     implode(', ', $data['orders'])
@@ -115,9 +121,9 @@ class JR_StockHistory_Model_Stock_Observer
         }
     }
 
-    public function insertStockHistory(Mage_CatalogInventory_Model_Stock_Item $stockItem, $message = '')
+    public function insertStockMovement(Mage_CatalogInventory_Model_Stock_Item $stockItem, $message = '')
     {
-        Mage::getModel('jr_stockhistory/stock_history')
+        Mage::getModel('bubble_stockmovements/stock_movement')
             ->setItemId($stockItem->getId())
             ->setUser($this->_getUsername())
             ->setUserId($this->_getUserId())
@@ -131,15 +137,15 @@ class JR_StockHistory_Model_Stock_Observer
     public function saveStockItemAfter($observer)
     {
         $stockItem = $observer->getEvent()->getItem();
-        if (! $stockItem->getStockStatusChangedAutomaticallyFlag() || $stockItem->getOriginalInventoryQty() != $stockItem->getQty()) {
-            if (! $message = $stockItem->getSaveHistoryMessage()) {
+        if (!$stockItem->getStockStatusChangedAutomaticallyFlag() || $stockItem->getOriginalInventoryQty() != $stockItem->getQty()) {
+            if (!$message = $stockItem->getSaveMovementMessage()) {
                 if (Mage::getSingleton('api/session')->getSessionId()) {
-                    $message = Mage::helper('jr_stockhistory')->__('Stock saved from Magento API');
+                    $message = 'Stock saved from Magento API';
                 } else {
-                    $message = Mage::helper('jr_stockhistory')->__('Stock saved manually');
+                    $message = 'Stock saved manually';
                 }
             }
-            $this->insertStockHistory($stockItem, $message);
+            $this->insertStockMovement($stockItem, $message);
         }
     }
 
@@ -151,9 +157,12 @@ class JR_StockHistory_Model_Stock_Observer
             if ($stockItem->getId()) {
                 $message = 'Product restocked';
                 if ($creditMemo = Mage::registry('current_creditmemo')) {
-                    $message = sprintf('Product restocked after credit memo creation (credit memo: %s)', $creditMemo->getIncrementId());
+                    $message = sprintf(
+                        'Product restocked after credit memo creation (credit memo: %s)',
+                        $creditMemo->getIncrementId()
+                    );
                 }
-                $this->insertStockHistory($stockItem, $message);
+                $this->insertStockMovement($stockItem, $message);
             }
         }
     }
@@ -161,7 +170,9 @@ class JR_StockHistory_Model_Stock_Observer
     protected function _getUserId()
     {
         $userId = null;
-        if (Mage::getSingleton('admin/session')->isLoggedIn()) {
+        if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $userId = Mage::getSingleton('customer/session')->getCustomerId();
+        } elseif (Mage::getSingleton('admin/session')->isLoggedIn()) {
             $userId = Mage::getSingleton('admin/session')->getUser()->getId();
         }
 
@@ -173,6 +184,8 @@ class JR_StockHistory_Model_Stock_Observer
         $username = '-';
         if (Mage::getSingleton('api/session')->isLoggedIn()) {
             $username = Mage::getSingleton('api/session')->getUser()->getUsername();
+        } elseif (Mage::getSingleton('customer/session')->isLoggedIn()) {
+            $username = Mage::getSingleton('customer/session')->getCustomer()->getName();
         } elseif (Mage::getSingleton('admin/session')->isLoggedIn()) {
             $username = Mage::getSingleton('admin/session')->getUser()->getUsername();
         }

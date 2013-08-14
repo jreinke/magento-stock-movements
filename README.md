@@ -1,11 +1,10 @@
-# Add stock history to your Magento products
+# Save stock movements of your Magento products
 
-![Stock History](http://i.imgur.com/Tpt6B.jpg)
+![Stock Movements](http://i.imgur.com/Tpt6B.jpg)
 
 ## Features
 
-* Store each product stock change on an independent table
-* Visualize stock moves in a new tab on product modification page
+* Saves stock movements in a new tab on the product modification page
 
 ## Installation
 
@@ -15,14 +14,14 @@ Install with [modgit](https://github.com/jreinke/modgit):
 
     $ cd /path/to/magento
     $ modgit init
-    $ modgit clone stock-history https://github.com/jreinke/magento-stock-history.git
+    $ modgit add stock-movements https://github.com/jreinke/magento-stock-movements.git
 
 or download package manually:
 
-* Download latest version [here](https://github.com/jreinke/magento-stock-history/downloads)
+* Download latest version [here](https://github.com/jreinke/magento-stock-movements/downloads)
 * Unzip in Magento root folder
-* Clean cache
+* Clear cache
 
 ## Full overview
 
-I wrote an article on my blog for full extension overview, [click here](http://www.bubblecode.net/en/2012/02/07/magento-save-product-stock-moves/).
+A full overview is available [here](http://www.bubblecode.net/en/2012/02/07/magento-save-product-stock-moves/).
