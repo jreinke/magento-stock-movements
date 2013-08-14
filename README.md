@@ -18,7 +18,7 @@ Install with [modgit](https://github.com/jreinke/modgit):
 
 or download package manually:
 
-* Download latest version [here](https://github.com/jreinke/magento-stock-movements/downloads)
+* Download latest version [here](https://github.com/jreinke/magento-stock-movements/archive/master.zip)
 * Unzip in Magento root folder
 * Clear cache
 
