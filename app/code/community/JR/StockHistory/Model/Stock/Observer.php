@@ -106,7 +106,7 @@ class JR_StockHistory_Model_Stock_Observer
 
         if (!empty($stockItems)) {
             foreach ($stockItems as $data) {
-                $this->insertStockHistory($stockItem, sprintf(
+                $this->insertStockHistory($data['item'], sprintf(
                     'Product ordered (order%s: %s)',
                     count($data['orders']) > 1 ? 's' : '',
                     implode(', ', $data['orders'])
