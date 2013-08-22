@@ -127,6 +127,7 @@ class Bubble_StockMovements_Model_Stock_Observer
             ->setItemId($stockItem->getId())
             ->setUser($this->_getUsername())
             ->setUserId($this->_getUserId())
+            ->setIsAdmin((int) Mage::getSingleton('admin/session')->isLoggedIn())
             ->setQty($stockItem->getQty())
             ->setIsInStock((int) $stockItem->getIsInStock())
             ->setMessage($message)
