@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <catalog>
+            <children>
+                <stock_movements translate="title" module="bubble_stockmovements">
+                    <title>Stock Movements</title>
+                    <sort_order>1100</sort_order>
+                    <action>adminhtml/stock_movement/list</action>
+                </stock_movements>
+            </children>
+        </catalog>
+    </menu>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <catalog>
+                        <children>
+                            <stock_movements translate="title" module="bubble_stockmovements">
+                                <title>Stock Movements</title>
+                            </stock_movements>
+                        </children>
+                    </catalog>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <stock_movements translate="title" module="bubble_stockmovements">
+                                        <title>Stock Movements</title>
+                                    </stock_movements>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

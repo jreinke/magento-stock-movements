@@ -36,4 +36,21 @@ class Bubble_StockMovements_Model_Resource_Stock_Movement_Collection
 
         return $this;
     }
+
+    public function joinProduct()
+    {
+        $this->getSelect()
+            ->joinLeft(
+                array('stock_item' => $this->getTable('cataloginventory/stock_item')),
+                'main_table.item_id = stock_item.item_id',
+                'product_id'
+            )
+            ->joinLeft(
+                array('product' => $this->getTable('catalog/product')),
+                'stock_item.product_id = product.entity_id',
+                array('sku' => 'product.sku')
+            );
+
+        return $this;
+    }
 }

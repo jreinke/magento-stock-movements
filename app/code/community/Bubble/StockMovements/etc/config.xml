@@ -106,4 +106,15 @@
             </modules>
         </translate>
     </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Bubble_StockMovements before="Mage_Adminhtml">Bubble_StockMovements_Adminhtml</Bubble_StockMovements>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>
