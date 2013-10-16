@@ -2,7 +2,7 @@
 /**
  * @category    Bubble
  * @package     Bubble_StockMovements
- * @version     1.0.0
+ * @version     1.2.0
  * @copyright   Copyright (c) 2013 BubbleCode (http://shop.bubblecode.net)
  */
 class Bubble_StockMovements_Block_Adminhtml_Stock_Movement extends Mage_Adminhtml_Block_Widget_Grid_Container

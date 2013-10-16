@@ -1,4 +1,10 @@
 <?php
+/**
+ * @category    Bubble
+ * @package     Bubble_StockMovements
+ * @version     1.2.0
+ * @copyright   Copyright (c) 2013 BubbleCode (http://shop.bubblecode.net)
+ */
 
 $installer = $this;
 /* @var $installer Mage_Core_Model_Resource_Setup */
