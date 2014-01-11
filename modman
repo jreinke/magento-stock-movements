@@ -1,0 +1,5 @@
+app/code/community/Bubble   app/code/community/Bubble/StockMovements
+app/etc/modules/Bubble_StockMovements.xml   app/etc/modules/Bubble_StockMovements.xml
+locale/en_US/Bubble_StockMovements.csv  locale/en_US/Bubble_StockMovements.csv
+locale/fr_FR/Bubble_StockMovements.csv  locale/fr_FR/Bubble_StockMovements.csv
+locale/pt_BR/Bubble_StockMovements.csv  locale/pt_BR/Bubble_StockMovements.csv
