@@ -110,10 +110,11 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
     public function decorateSku($value, $row)
     {
         $html = sprintf(
-            '<a href="%s" title="%s">%s</a>',
+            '<a href="%s" title="%s">%s</a><span>&nbsp;%s</span>',
             $this->getUrl('adminhtml/catalog_product/edit', array('id' => $row->getProductId())),
             Mage::helper('bubble_stockmovements')->__('Edit Product'),
-            $value
+            $value,
+            Mage::getModel('catalog/product')->load($row->getProductId())->getName()
         );
 
         return $html;
