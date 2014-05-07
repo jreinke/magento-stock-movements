@@ -103,7 +103,7 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
             'width'         => '180px',
             'filter_index'  => 'main_table.created_at',
         ));
-
+        $this->addRssList('rss/catalog/stockmovements', Mage::helper('sales')->__('Stock Movements RSS'));
         return parent::_prepareColumns();
     }
 
