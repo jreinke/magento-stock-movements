@@ -13,9 +13,9 @@
         </models>
         <blocks>
             <rss>
-                <bubble_rss>
-                    <class>Bubble_Rss_Block_Catalog_Stockmovements</class>
-                </bubb_rss>
+                <rewrite>
+                    <catalog_stockmovements>Bubble_Rss_Block_Catalog_Stockmovements</catalog_stockmovements>
+                </rewrite>
             </rss>
         </blocks>
         <events>

@@ -54,7 +54,7 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
     }
     public function addStockMovementsXmlCallback($args)
     {
-        Mage::log("Bubble_Rss_Block_Catalog_StockMovements addStockMovementsXmlCallback",Zend_Log::DEBUG,'magento-stock-movements.log',true);
+        /*Mage::log("Bubble_Rss_Block_Catalog_StockMovements addStockMovementsXmlCallback",Zend_Log::DEBUG,'magento-stock-movements.log',true);
         Mage::log(Zend_Debug::dump($args),Zend_Log::DEBUG,'magento-stock-movements.log',true);
         $product = Mage::getModel('catalog/product')->load($args['move']['product']->getProductId());
         Mage::dispatchEvent('rss_catalog_category_xml_callback', $args);
@@ -72,7 +72,7 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
             'title'         => $product->getName(),
             'link'          => $product->getProductUrl(),
             'description'   => $description,
-        );
-        $rssObj->_addEntry($data);
+        );*/
+        $rssObj->_addEntry('This works!');//$data);
     }
 }

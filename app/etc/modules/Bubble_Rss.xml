@@ -4,6 +4,10 @@
         <Bubble_Rss>
             <active>true</active>
             <codePool>community</codePool>
+            <depends>
+                <Mage_Rss />
+                <Bubble_StockMovements />
+            </depends>
         </Bubble_Rss>
     </modules>
 </config>
