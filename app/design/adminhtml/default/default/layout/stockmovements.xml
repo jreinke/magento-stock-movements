@@ -1,0 +1,5 @@
+<layout>
+    <adminhtml_rss_catalog_stockmovements>
+        <block type="rss/catalog_stockmovements" output="toHtml" name="rss.catalog.stockmovements" />
+    </adminhtml_rss_catalog_stockmovements>
+</layout>
