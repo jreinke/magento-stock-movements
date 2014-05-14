@@ -7,9 +7,11 @@
     </modules>
     <global>
         <models>
-            <bubble_rss>
-                <class>Bubble_Rss_Model</class>
-            </bubble_rss>
+            <rss>
+                <rewrite>
+                    <observer>Bubble_Rss_Model_Observer</observer>
+                </rewrite>
+            </rss>
         </models>
         <blocks>
             <rss>
@@ -71,16 +73,24 @@
             </sales_order_item_cancel>
         </events>
     </global>
-    <frontend>
+    <admin>
         <routers>
             <rss>
-                <use>standard</use>
+                <use>admin</use>
                 <args>
-                    <modules>
-                        <Bubble_Rss>Bubble_Rss</Bubble_Rss>
-                    </modules>
+                    <module>Bubble_Rss</module>
+                    <frontName>rss</frontName>
                 </args>
             </rss>
         </routers>
+    </admin>
+    <frontend>
+        <layout>
+            <updates>
+                <stockmovementsrss>
+                    <file>stockmovementsrss.xml</file>
+                </stockmovementsrss>
+            </updates>
+        </layout>
     </frontend>
 </config>
