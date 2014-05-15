@@ -15,7 +15,6 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
     
     protected function _construct()
     {
-        Mage::log("Bubble_Rss_Block_Catalog_Stockmovements _construct",Zend_Log::DEBUG,'magento-stock-movements.log',true);
         $this->setCacheTags(array(self::CACHE_TAG));
         /*
         * setting cache to save the rss for 10 minutes
@@ -25,7 +24,6 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
     }
     protected function _toHtml()
     {
-        Mage::log("Bubble_Rss_Block_Catalog_Stockmovements _toHtml",Zend_Log::DEBUG,'magento-stock-movements.log',true);
         $newurl = Mage::getUrl('rss/catalog/stockmovements');
         $title = Mage::helper('rss')->__('Stock Movements');
         
@@ -37,42 +35,47 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
             'charset'     => 'UTF-8',
         );
         $rssObj->_addHeader($data);
-        
-        $_movesCollection = Mage::getModel('bubble_stockmovements/stock_movement')->getCollection()->joinProduct();
-        
-        if ($_movesCollection)
+        $collection = Mage::getModel('bubble_stockmovements/stock_movement')->getCollection()->setOrder('movement_id'); //->addFieldToFilter('message', 'Stock saved from Magento API')
+        if ($this->getProduct()) {
+            $stockItem = Mage::getModel('cataloginventory/stock_item')
+                ->loadByProduct($this->getProduct()->getId());
+            if ($stockItem->getId()) {
+                $collection->addFieldToFilter('item_id', $stockItem->getId());
+            }
+        } else {
+            $collection->joinProduct();
+        }
+        if ($collection)
         {
             $args = array('rssObj' => $rssObj);
-            
-            foreach ($_movesCollection as $_move)
+            $n=0;
+            foreach ($collection as $row)
             {
-                $args['move'] = $_move;
+                $n++;
+                $args['row'] = $row;
                 $this->addStockMovementsXmlCallback($args);
+                if($n==50){break;}
             }
         }
         return $rssObj->createRssXml();
     }
+    
+    public function getProduct()
+    {
+        return Mage::registry('current_product');
+    }
+    
     public function addStockMovementsXmlCallback($args)
     {
-        /*Mage::log("Bubble_Rss_Block_Catalog_StockMovements addStockMovementsXmlCallback",Zend_Log::DEBUG,'magento-stock-movements.log',true);
-        Mage::log(Zend_Debug::dump($args),Zend_Log::DEBUG,'magento-stock-movements.log',true);
-        $product = Mage::getModel('catalog/product')->load($args['move']['product']->getProductId());
+        $product = Mage::getModel('catalog/product')->load($args['row']->getProductId());
         Mage::dispatchEvent('rss_catalog_category_xml_callback', $args);
-        $extendedDescr = "<p>" . $product->getShortDescription() . "</p>";
-        $description = '<table><tr>'
-        . '<td><a href="'.$product->getProductUrl().'"><img src="'
-        . $this->helper('catalog/image')->init($product, 'thumbnail')->resize(75, 75)
-        . '" border="0" align="left" height="75" width="75"></a></td>'
-        . '<td  style="text-decoration:none;">' . $extendedDescr;
-        $description .= '<p>' . Mage::app()->getLocale()->currency(Mage::app()->getStore()->
-        getCurrentCurrencyCode())->getSymbol() . " " . $this->helper('tax')->getPrice($product, $product->getFinalPrice(), true) . '</p>';
-        $description .= '</td></tr></table>';
+        $description = $product->getName().' '.$args['row']->getQty();
         $rssObj = $args['rssObj'];
         $data = array(
-            'title'         => $product->getName(),
-            'link'          => $product->getProductUrl(),
+            'title'         => $product->getName().' '.$args['row']->getQty(),
+            'link'          => Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id' => $args['row']->getProductId())),
             'description'   => $description,
-        );*/
-        $rssObj->_addEntry('This works!');//$data);
+        );
+        $rssObj->_addEntry($data);
     }
 }

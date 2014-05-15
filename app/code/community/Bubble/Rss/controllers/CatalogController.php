@@ -11,7 +11,6 @@ class Bubble_Rss_CatalogController extends Mage_Rss_CatalogController
 {
     public function stockmovementsAction()
     {
-        Mage::log("Bubble_Rss_CatalogController stockmovementsAction",Zend_Log::DEBUG,'magento-stock-movements.log',true);
         $this->getResponse()->setHeader('Content-type', 'text/xml; charset=UTF-8');
         $this->loadLayout(false);
         $this->renderLayout();
@@ -19,7 +18,6 @@ class Bubble_Rss_CatalogController extends Mage_Rss_CatalogController
     //This will prompt for admin user and password to view the rss
     public function preDispatch()
     {
-        Mage::log("Bubble_Rss_CatalogController preDispatch",Zend_Log::DEBUG,'magento-stock-movements.log',true);
         if ($this->getRequest()->getActionName() == 'stockmovements') {
             $this->_currentArea = 'adminhtml';
             Mage::helper('rss')->authAdmin('catalog/stockmovements');
