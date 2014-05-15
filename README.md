@@ -5,6 +5,7 @@
 ## Features
 
 * Saves stock movements in a new tab on the product modification page
+* RSS Feed for each stock movement
 
 ## Installation
 
