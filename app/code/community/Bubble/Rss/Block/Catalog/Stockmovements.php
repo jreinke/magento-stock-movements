@@ -35,7 +35,7 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
             'charset'     => 'UTF-8',
         );
         $rssObj->_addHeader($data);
-        $collection = Mage::getModel('bubble_stockmovements/stock_movement')->getCollection()->setOrder('movement_id'); //->addFieldToFilter('message', 'Stock saved from Magento API')
+        $collection = Mage::getModel('bubble_stockmovements/stock_movement')->getCollection()->setOrder('created_at');
         if ($this->getProduct()) {
             $stockItem = Mage::getModel('cataloginventory/stock_item')
                 ->loadByProduct($this->getProduct()->getId());
@@ -75,6 +75,7 @@ class Bubble_Rss_Block_Catalog_Stockmovements extends Mage_Rss_Block_Abstract
             'title'         => $product->getName().' '.$args['row']->getQty(),
             'link'          => Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id' => $args['row']->getProductId())),
             'description'   => $description,
+            'lastUpdate'    => strtotime($args['row']->getCreatedAt())
         );
         $rssObj->_addEntry($data);
     }
