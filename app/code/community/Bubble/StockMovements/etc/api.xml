@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>
+            <stockmovements_movement translate="title" module="stockmovements">
+                <model>cbubble_stockmovements/stock_movement_api</model>
+                <title>Inventory API</title>
+                <acl>bubble_stockmovements</acl>
+                <methods>
+                    <list translate="title" module="stockmovements">
+                        <title>Retrieve stock data by product ids</title>
+                        <method>items</method>
+                        <acl>bubble_stockmovements/info</acl>
+                    </list>
+                </methods>
+                <faults module="stockmovements">
+                    <not_exists>
+                        <code>101</code>
+                        <message>Product not exists.</message>
+                    </not_exists>
+                </faults>
+            </stockmovements_movement>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <stockmovements_movement>stockmovements_movement</stockmovements_movement>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <stockmovements_movement translate="title" module="stockmovements">
+                    <title>Catalog Inventory Movement</title>
+                    <sort_order>4</sort_order>
+                    <info translate="title" module="stockmovements">
+                        <title>Retrieve stock movement data</title>
+                    </info>
+                </stockmovements_movement>
+            </resources>
+        </acl>
+    </api>
+</config>

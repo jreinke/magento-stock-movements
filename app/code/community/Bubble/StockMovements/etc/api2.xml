@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config>
+    <api2>
+        <resource_groups>
+            <stockmovements translate="title" module="api2">
+                <title>StockMovements</title>
+                <sort_order>60</sort_order>
+            </stockmovements>
+        </resource_groups>
+        <resources>
+            <stockmovementsmovement translate="title" module="api2">
+                <group>stockmovements</group>
+                <model>bubble_stockmovements/api2_stock_movement</model>
+                <working_model>bubble_stockmovements/api2_stock_movement</working_model>
+                <title>Movement</title>
+                <sort_order>10</sort_order>
+                <privileges>
+                    <admin>
+                        <retrieve>1</retrieve>                       
+                    </admin>
+                </privileges>
+                <attributes translate="user, item_id" module="api2">
+                    <movement_id>Movement Id</movement_id>
+                    <item_id>Stock item Id</item_id>
+                    <user>User issued</user>
+                    <user_id>User id</user_id>
+                    <qty>Qty</qty>
+                    <is_in_stock>Product is in stock</is_in_stock>
+                    <message>Message</message>
+                    <created_at>Creation date</created_at>
+                    <movement>Movement</movement>
+                </attributes>
+                <routes>
+                    <route_entity>
+                        <route>/stockmovement/:id</route>
+                        <action_type>entity</action_type>
+                    </route_entity>
+                    <route_collection>
+                        <route>/stockmovement</route>
+                        <action_type>collection</action_type>
+                    </route_collection>
+                </routes>
+                <versions>1</versions>
+            </stockmovementsmovement>
+        </resources>
+    </api2>
+</config>
