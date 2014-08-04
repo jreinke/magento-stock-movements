@@ -123,16 +123,18 @@ class Bubble_StockMovements_Model_Stock_Observer
 
     public function insertStockMovement(Mage_CatalogInventory_Model_Stock_Item $stockItem, $message = '')
     {
-        Mage::getModel('bubble_stockmovements/stock_movement')
-            ->setItemId($stockItem->getId())
-            ->setUser($this->_getUsername())
-            ->setUserId($this->_getUserId())
-            ->setIsAdmin((int) Mage::getSingleton('admin/session')->isLoggedIn())
-            ->setQty($stockItem->getQty())
-            ->setIsInStock((int) $stockItem->getIsInStock())
-            ->setMessage($message)
-            ->save();
-        Mage::getModel('catalog/product')->load($stockItem->getProductId())->cleanCache();
+        if ($stockItem->getId()) {
+            Mage::getModel('bubble_stockmovements/stock_movement')
+                ->setItemId($stockItem->getId())
+                ->setUser($this->_getUsername())
+                ->setUserId($this->_getUserId())
+                ->setIsAdmin((int) Mage::getSingleton('admin/session')->isLoggedIn())
+                ->setQty($stockItem->getQty())
+                ->setIsInStock((int) $stockItem->getIsInStock())
+                ->setMessage($message)
+                ->save();
+            Mage::getModel('catalog/product')->load($stockItem->getProductId())->cleanCache();
+        }
     }
 
     public function saveStockItemAfter($observer)
