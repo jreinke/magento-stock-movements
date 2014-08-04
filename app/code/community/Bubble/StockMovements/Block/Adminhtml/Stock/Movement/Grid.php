@@ -2,8 +2,8 @@
 /**
  * @category    Bubble
  * @package     Bubble_StockMovements
- * @version     1.2.0
- * @copyright   Copyright (c) 2013 BubbleCode (http://shop.bubblecode.net)
+ * @version     1.2.1
+ * @copyright   Copyright (c) 2014 BubbleShop (http://www.bubbleshop.net)
  */
 class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
