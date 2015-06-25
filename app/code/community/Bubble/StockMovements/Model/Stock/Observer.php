@@ -10,8 +10,9 @@ class Bubble_StockMovements_Model_Stock_Observer
     public function addStockMovementsTab()
     {
         $layout = Mage::getSingleton('core/layout');
+        /** @var Mage_Adminhtml_Block_Catalog_Product_Edit_Tabs $block */
         $block = $layout->getBlock('product_tabs');
-        if ($block) {
+        if ($block && $block->getProduct() && $block->getProduct()->getTypeId() == 'simple') {
             $block->addTab('stock_movements', array(
                 'after' => 'inventory',
                 'label' => Mage::helper('bubble_stockmovements')->__('Stock Movements'),
@@ -95,7 +96,8 @@ class Bubble_StockMovements_Model_Stock_Observer
         $stockItems = array();
         foreach ($orders as $order) {
             foreach ($order->getAllItems() as $orderItem) {
-                if ($orderItem->getQtyOrdered()) {
+                /** @var Mage_Sales_Model_Order_Item $orderItem */
+                if ($orderItem->getQtyOrdered() && $orderItem->getProductType() == 'simple') {
                     $stockItem = Mage::getModel('cataloginventory/stock_item')
                         ->loadByProduct($orderItem->getProductId());
                     if (!isset($stockItems[$stockItem->getId()])) {
