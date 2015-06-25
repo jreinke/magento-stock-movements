@@ -2,8 +2,8 @@
 /**
  * @category    Bubble
  * @package     Bubble_StockMovements
- * @version     1.2.1
- * @copyright   Copyright (c) 2014 BubbleShop (http://www.bubbleshop.net)
+ * @version     1.2.2
+ * @copyright   Copyright (c) 2015 BubbleShop (https://www.bubbleshop.net)
  */
 class Bubble_StockMovements_Model_Resource_Stock_Movement extends Mage_Core_Model_Resource_Db_Abstract
 {
