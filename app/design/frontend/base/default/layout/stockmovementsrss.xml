@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<layout>
+    <rss_catalog_stockmovements>
+        <block type="rss/catalog_stockmovements" output="toHtml" name="rss.catalog.stockmovements" />
+    </rss_catalog_stockmovements>
+</layout>

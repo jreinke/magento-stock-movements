@@ -103,17 +103,18 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
             'width'         => '180px',
             'filter_index'  => 'main_table.created_at',
         ));
-
+        $this->addRssList('rss/catalog/stockmovements', Mage::helper('catalog')->__('Stock Movements RSS'));
         return parent::_prepareColumns();
     }
 
     public function decorateSku($value, $row)
     {
         $html = sprintf(
-            '<a href="%s" title="%s">%s</a>',
+            '<a href="%s" title="%s">%s</a><span>&nbsp;%s</span>',
             $this->getUrl('adminhtml/catalog_product/edit', array('id' => $row->getProductId())),
             Mage::helper('bubble_stockmovements')->__('Edit Product'),
-            $value
+            $value,
+            Mage::getModel('catalog/product')->load($row->getProductId())->getName()
         );
 
         return $html;
