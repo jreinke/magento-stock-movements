@@ -95,18 +95,20 @@ class Bubble_StockMovements_Model_Stock_Observer
         }
         $stockItems = array();
         foreach ($orders as $order) {
-            foreach ($order->getAllItems() as $orderItem) {
-                /** @var Mage_Sales_Model_Order_Item $orderItem */
-                if ($orderItem->getQtyOrdered() && $orderItem->getProductType() == 'simple') {
-                    $stockItem = Mage::getModel('cataloginventory/stock_item')
-                        ->loadByProduct($orderItem->getProductId());
-                    if (!isset($stockItems[$stockItem->getId()])) {
-                        $stockItems[$stockItem->getId()] = array(
-                            'item'   => $stockItem,
-                            'orders' => array($order->getIncrementId()),
-                        );
-                    } else {
-                        $stockItems[$stockItem->getId()]['orders'][] = $order->getIncrementId();
+            if ($order) {
+                foreach ($order->getAllItems() as $orderItem) {
+                    /** @var Mage_Sales_Model_Order_Item $orderItem */
+                    if ($orderItem->getQtyOrdered() && $orderItem->getProductType() == 'simple') {
+                        $stockItem = Mage::getModel('cataloginventory/stock_item')
+                            ->loadByProduct($orderItem->getProductId());
+                        if (!isset($stockItems[$stockItem->getId()])) {
+                            $stockItems[$stockItem->getId()] = array(
+                                'item' => $stockItem,
+                                'orders' => array($order->getIncrementId()),
+                            );
+                        } else {
+                            $stockItems[$stockItem->getId()]['orders'][] = $order->getIncrementId();
+                        }
                     }
                 }
             }
