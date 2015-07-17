@@ -1,0 +1,18 @@
+{
+    "name": "jreinke/magento-stock-movements",
+    "type": "magento-module",
+    "description": "Save stock movements of your Magento products.",
+    "keywords":["magento","stock", "inventory", "logging", "administration"],
+    "homepage":"http://www.bubblecode.net/en/2012/02/07/magento-save-product-stock-moves/",
+
+    "authors": [
+        {
+            "name": "Johann Reinke",
+            "homepage": "http://www.bubblecode.net/en",
+            "role": "developer"
+        }
+    ],
+    "require": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}
