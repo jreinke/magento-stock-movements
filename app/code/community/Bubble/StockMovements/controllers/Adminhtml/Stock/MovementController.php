@@ -16,4 +16,32 @@ class Bubble_StockMovements_Adminhtml_Stock_MovementController extends Mage_Admi
         $this->_setActiveMenu('catalog/stock_movements');
         $this->renderLayout();
     }
+
+    /**
+     * Export stock movements value as CSV file
+     *
+     * @return void
+     */
+    public function exportStockMovementCsvAction()
+    {
+        $fileName = 'stock_movements.csv';
+        $content  = $this->getLayout()
+            ->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')
+            ->getCsvFile();
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
+
+    /**
+     * Export stock movements as excel xml file
+     *
+     * @return void
+     */
+    public function exportStockMovementXmlAction()
+    {
+        $fileName = 'stock_movements.xml';
+        $content  = $this->getLayout()
+            ->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')
+            ->getExcelFile();
+        $this->_prepareDownloadResponse($fileName, $content);
+    }
 }
