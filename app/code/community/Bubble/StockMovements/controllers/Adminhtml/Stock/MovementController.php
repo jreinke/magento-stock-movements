@@ -24,6 +24,9 @@ class Bubble_StockMovements_Adminhtml_Stock_MovementController extends Mage_Admi
      */
     public function exportStockMovementCsvAction()
     {
+        $productId = $this->getRequest()->getParam('id');
+        $product = Mage::getModel('catalog/product')->load($productId);
+        Mage::register('current_product', $product);
         $fileName = 'stock_movements.csv';
         $content  = $this->getLayout()
             ->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')
@@ -38,6 +41,9 @@ class Bubble_StockMovements_Adminhtml_Stock_MovementController extends Mage_Admi
      */
     public function exportStockMovementXmlAction()
     {
+        $productId = $this->getRequest()->getParam('id');
+        $product = Mage::getModel('catalog/product')->load($productId);
+        Mage::register('current_product', $product);
         $fileName = 'stock_movements.xml';
         $content  = $this->getLayout()
             ->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')
