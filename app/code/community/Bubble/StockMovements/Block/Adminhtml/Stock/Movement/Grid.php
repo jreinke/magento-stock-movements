@@ -49,7 +49,7 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
                 'index'          => 'sku',
                 'filter_index'   => 'product.sku',
                 'type'           => 'text',
-                'frame_callback' => array($this, 'decorateSku'),
+                'renderer'       => 'bubble_stockmovements/adminhtml_widget_grid_column_renderer_movement',
             ));
         }
 
@@ -104,18 +104,10 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
             'filter_index'  => 'main_table.created_at',
         ));
 
+        $this->addExportType('*/stock_movement/exportStockMovementCsv', Mage::helper('bubble_stockmovements')->__('CSV'));
+        $this->addExportType('*/stock_movement/exportStockMovementXml', Mage::helper('bubble_stockmovements')->__('Excel XML'));
+
         return parent::_prepareColumns();
     }
 
-    public function decorateSku($value, $row)
-    {
-        $html = sprintf(
-            '<a href="%s" title="%s">%s</a>',
-            $this->getUrl('adminhtml/catalog_product/edit', array('id' => $row->getProductId())),
-            Mage::helper('bubble_stockmovements')->__('Edit Product'),
-            $value
-        );
-
-        return $html;
-    }
 }
