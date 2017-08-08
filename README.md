@@ -25,3 +25,18 @@ or download package manually:
 ## Full overview
 
 A full overview is available [here](http://www.bubblecode.net/en/2012/02/07/magento-save-product-stock-moves/).
+
+## Removal script/cmd
+
+Remove all extension files:
+
+ rm -rf app/code/community/Bubble/StockMovements/
+ rm app/etc/modules/Bubble_StockMovements.xml
+ rm app/locale/en_US/Bubble_StockMovements.csv
+ rm app/locale/fr_FR/Bubble_StockMovements.csv
+ rm app/locale/pt_BR/Bubble_StockMovements.csv
+
+Cleanup database:
+
+ DROP TABLE `bubble_stock_movement`;
+ DELETE FROM `core_resource` WHERE `code` = 'bubble_stockmovements_setup';
