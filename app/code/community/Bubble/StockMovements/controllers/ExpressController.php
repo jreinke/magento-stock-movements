@@ -7,7 +7,8 @@ class Bubble_StockMovements_ExpressController extends Mage_Paypal_ExpressControl
     public function placeOrderAction()
     {
         parent::placeOrderAction();
-        if ($this->_checkout instanceof Varien_Object && $this->_quote instanceof Mage_Sales_Model_Quote
+        if ($this->_checkout instanceof Mage_Paypal_Model_Express_Checkout
+            && $this->_quote instanceof Mage_Sales_Model_Quote
             && $this->_checkout->getOrder() instanceof Mage_Sales_Model_Order) {
             Mage::dispatchEvent(
                 'bubble_stockmovements_paypal_express_checkout_submit_all_after',
