@@ -93,6 +93,14 @@
                     </bubble_stockmovements>
                 </observers>
             </sales_order_item_cancel>
+            <bubble_stockmovements_paypal_express_checkout_submit_all_after>
+                <observers>
+                    <bubble_stockmovements>
+                        <class>bubble_stockmovements/stock_observer</class>
+                        <method>checkoutAllSubmitAfter</method>
+                    </bubble_stockmovements>
+                </observers>
+            </bubble_stockmovements_paypal_express_checkout_submit_all_after>
         </events>
     </global>
     <adminhtml>
@@ -117,4 +125,15 @@
             </adminhtml>
         </routers>
     </admin>
+    <frontend>
+        <routers>
+            <paypal>
+                <args>
+                    <modules>
+                        <bubble_stockmovements before="Mage_Paypal">Bubble_StockMovements</bubble_stockmovements>
+                    </modules>
+                </args>
+            </paypal>
+        </routers>
+    </frontend>
 </config>
