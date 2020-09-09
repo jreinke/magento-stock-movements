@@ -1,6 +1,6 @@
 <?php
 
-require_once Mage::getModuleDir('controllers', 'Mage_PayPal') . DS . 'ExpressController.php';
+require_once Mage::getModuleDir('controllers', 'Mage_Paypal') . DS . 'ExpressController.php';
 
 class Bubble_StockMovements_ExpressController extends Mage_Paypal_ExpressController
 {
