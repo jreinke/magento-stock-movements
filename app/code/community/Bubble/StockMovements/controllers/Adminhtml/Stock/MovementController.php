@@ -16,4 +16,9 @@ class Bubble_StockMovements_Adminhtml_Stock_MovementController extends Mage_Admi
         $this->_setActiveMenu('catalog/stock_movements');
         $this->renderLayout();
     }
+
+    protected function _isAllowed ()
+    {
+        return Mage::getSingleton ('admin/session')->isAllowed ('admin/catalog/stock_movements');
+    }
 }

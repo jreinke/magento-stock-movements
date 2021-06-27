@@ -31,7 +31,7 @@ class Bubble_StockMovements_Model_Stock_Observer
         if ($item->getId() && ($productId = $item->getProductId()) && empty($children) && $qty) {
             Mage::getSingleton('cataloginventory/stock')->backItemQty($productId, $qty);
             $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($item->getProductId());
-            $this->insertStockMovement($stockItem, sprintf(
+            $this->insertStockMovement($stockItem, __(
                 'Product restocked after order cancellation (order: %s)',
                 $item->getOrder()->getIncrementId())
             );
@@ -75,7 +75,7 @@ class Bubble_StockMovements_Model_Stock_Observer
                     'user_id'     => $this->_getUserId(),
                     'qty'         => $stockData['qty'],
                     'is_in_stock' => (int) $stockData['is_in_stock'],
-                    'message'     => 'Product import',
+                    'message'     => __('Product import'),
                     'created_at'  => $datetime,
                 );
             }
@@ -116,7 +116,7 @@ class Bubble_StockMovements_Model_Stock_Observer
 
         if (!empty($stockItems)) {
             foreach ($stockItems as $data) {
-                $this->insertStockMovement($data['item'], sprintf(
+                $this->insertStockMovement($data['item'], __(
                     'Product ordered (order%s: %s)',
                     count($data['orders']) > 1 ? 's' : '',
                     implode(', ', $data['orders'])
@@ -147,9 +147,9 @@ class Bubble_StockMovements_Model_Stock_Observer
         if (!$stockItem->getStockStatusChangedAutomaticallyFlag() || $stockItem->getOriginalInventoryQty() != $stockItem->getQty()) {
             if (!$message = $stockItem->getSaveMovementMessage()) {
                 if (Mage::getSingleton('api/session')->getSessionId()) {
-                    $message = 'Stock saved from Magento API';
+                    $message = __('Stock saved from Magento API');
                 } else {
-                    $message = 'Stock saved manually';
+                    $message = __('Stock saved manually');
                 }
             }
             $this->insertStockMovement($stockItem, $message);
@@ -162,9 +162,9 @@ class Bubble_StockMovements_Model_Stock_Observer
         foreach ($items as $productId => $item) {
             $stockItem = Mage::getModel('cataloginventory/stock_item')->loadByProduct($productId);
             if ($stockItem->getId()) {
-                $message = 'Product restocked';
+                $message = __('Product restocked');
                 if ($creditMemo = Mage::registry('current_creditmemo')) {
-                    $message = sprintf(
+                    $message = __(
                         'Product restocked after credit memo creation (credit memo: %s)',
                         $creditMemo->getIncrementId()
                     );

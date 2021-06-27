@@ -51,6 +51,14 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
                 'type'           => 'text',
                 'frame_callback' => array($this, 'decorateSku'),
             ));
+
+            $this->addColumn('name', array(
+                'header'         => Mage::helper('bubble_stockmovements')->__('Name'),
+                'index'          => 'name',
+                'filter_index'   => 'cpe.value',
+                'type'           => 'text',
+                'frame_callback' => array($this, 'decorateSku'),
+            ));
         }
 
         $this->addColumn('qty', array(
