@@ -43,6 +43,14 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
 
     protected function _prepareColumns()
     {
+        $this->addColumn('movement_id', array(
+            'header'        => Mage::helper('bubble_stockmovements')->__('Movement ID'),
+            'align'         => 'right',
+            'index'         => 'movement_id',
+            'type'          => 'number',
+            'width'         => '80px',
+            'filter_index'  => 'main_table.movement_id',
+        ));
         if (!$this->getProduct()) {
             $this->addColumn('sku', array(
                 'header'         => Mage::helper('bubble_stockmovements')->__('SKU'),

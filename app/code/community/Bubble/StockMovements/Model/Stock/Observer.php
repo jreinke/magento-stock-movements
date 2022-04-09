@@ -16,7 +16,8 @@ class Bubble_StockMovements_Model_Stock_Observer
             $block->addTab('stock_movements', array(
                 'after' => 'inventory',
                 'label' => Mage::helper('bubble_stockmovements')->__('Stock Movements'),
-                'content' => $layout->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')->toHtml(),
+                'content' => $layout->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid')
+                    ->setId('productStockMovementGrid')->toHtml(),
             ));
         }
     }
