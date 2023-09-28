@@ -51,6 +51,7 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
             'width'         => '80px',
             'filter_index'  => 'main_table.movement_id',
         ));
+
         if (!$this->getProduct()) {
             $this->addColumn('sku', array(
                 'header'         => Mage::helper('bubble_stockmovements')->__('SKU'),
@@ -119,6 +120,9 @@ class Bubble_StockMovements_Block_Adminhtml_Stock_Movement_Grid extends Mage_Adm
             'width'         => '180px',
             'filter_index'  => 'main_table.created_at',
         ));
+
+        $this->addExportType('*/*/exportCsv', Mage::helper('basic')->__('CSV'));
+        $this->addExportType('*/*/exportExcel', Mage::helper('basic')->__('Excel XML'));
 
         return parent::_prepareColumns();
     }

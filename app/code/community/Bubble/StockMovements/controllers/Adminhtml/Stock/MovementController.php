@@ -21,4 +21,25 @@ class Bubble_StockMovements_Adminhtml_Stock_MovementController extends Mage_Admi
     {
         return Mage::getSingleton ('admin/session')->isAllowed ('admin/catalog/stock_movements');
     }
+
+    /**
+     * Export order grid to CSV format
+     */
+    public function exportCsvAction()
+    {
+        $fileName = 'stockmovements.csv';
+        $grid     = $this->getLayout()->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid');
+        $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
+    }
+
+    /**
+     *  Export order grid to Excel XML format
+     */
+    public function exportExcelAction()
+    {
+        $fileName   = 'stockmovements.xml';
+        $grid       = $this->getLayout()->createBlock('bubble_stockmovements/adminhtml_stock_movement_grid');
+        $this->_prepareDownloadResponse($fileName, $grid->getExcelFile($fileName));
+    }
 }
+
