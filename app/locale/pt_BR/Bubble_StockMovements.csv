@@ -1,10 +1,11 @@
+"Movement ID","ID Movimento"
 "Quantity","Quantidade"
 "Movement","Movimento"
 "In Stock","Em Estoque"
 "Message","Mensagem"
 "User","Usuário"
 "Date","Data"
-"Stock Movements","Quantidade em Estoque"
+"Stock Movements","Movimentos do Estoque"
 "Stock saved automatically","Estoque salvo automaticamente"
 "Stock saved manually","Estoque salvo manualmente"
 "Product ordered (order: %s)","Produto requisitado (pedido : %s)"
@@ -14,3 +15,5 @@
 "Product restocked after order cancellation (order: %s)","Produto devolvido ao estoque depois de cancelamento (pedido : %s)"
 "Product restocked after credit memo creation (credit memo: %s)","Produto devolvido ao estoque após criação de memorando de crédito (memorando de crédito : %s)"
 "Stock saved from Magento API","Estoque salvo a partir da API do Magento"
+"Product ordered (order%s: %s)","Produto comprado (pedido%s: %s)"
+

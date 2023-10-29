@@ -106,6 +106,17 @@
             </modules>
         </translate>
     </adminhtml>
+    <frontend>
+        <translate>
+            <modules>
+                <Bubble_StockMovements>
+                    <files>
+                        <default>Bubble_StockMovements.csv</default>
+                    </files>
+                </Bubble_StockMovements>
+            </modules>
+        </translate>
+    </frontend>
     <admin>
         <routers>
             <adminhtml>
